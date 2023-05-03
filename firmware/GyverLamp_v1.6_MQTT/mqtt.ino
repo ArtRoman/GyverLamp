@@ -1,4 +1,3 @@
-
 MQTTconfig readMQTTConfig () {
   int eeAddress = 300;
   MQTTconfig MQTTConfig;
@@ -27,79 +26,80 @@ int Get_EFFIDX (String effect) {
   #ifdef ENG
 
   if (effect.equals("Confetti")) return 0;
-  if (effect.equals("Fire")) return 1;
-  if (effect.equals("Rainbow vert")) return 2;
-  if (effect.equals("Rainbow Horiz")) return 3;
-  if (effect.equals("Color change")) return 4;
-  if (effect.equals("3D Madness")) return 5;
-  if (effect.equals("3D clouds")) return 6;
-  if (effect.equals("3D lava")) return 7;
-  if (effect.equals("3D plasma")) return 8;
-  if (effect.equals("3D rainbow")) return 9;
-  if (effect.equals("3D peacock")) return 10;
-  if (effect.equals("3D zebra")) return 11;
-  if (effect.equals("3D forest")) return 12;
-  if (effect.equals("3D ocean")) return 13;
-  if (effect.equals("Color")) return 14;
-  if (effect.equals("Snowfall")) return 15;
-  if (effect.equals("Matrix")) return 16;
-  if (effect.equals("Fireflies")) return 17;
-  if (effect.equals("Aquarium")) return 18;
-  if (effect.equals("Starfall")) return 19;
-  if (effect.equals("Paintball")) return 20;
-  if (effect.equals("Spiral")) return 21;
-  if (effect.equals("Warm Light")) return 22;
-  if (effect.equals("Pendulum")) return 23;
-  if (effect.equals("Twinkles")) return 24;
-  if (effect.equals("Police Strobo")) return 25;
-  if (effect.equals("Incremental Drift Rose")) return 26;
-  if (effect.equals("Pride")) return 27;
-  if (effect.equals("Butterflys")) return 28;
-  if (effect.equals("Rain")) return 29;
-  if (effect.equals("Thunderstorm")) return 30;
-  if (effect.equals("Rubik's Cube")) return 31;
-  if (effect.equals("Nexus")) return 32;
-  if (effect.equals("Demo")) return 33;
+  else if (effect.equals("Fire")) return 1;
+  else if (effect.equals("Rainbow vert")) return 2;
+  else if (effect.equals("Rainbow Horiz")) return 3;
+  else if (effect.equals("Color change")) return 4;
+  else if (effect.equals("3D Madness")) return 5;
+  else if (effect.equals("3D clouds")) return 6;
+  else if (effect.equals("3D lava")) return 7;
+  else if (effect.equals("3D plasma")) return 8;
+  else if (effect.equals("3D rainbow")) return 9;
+  else if (effect.equals("3D peacock")) return 10;
+  else if (effect.equals("3D zebra")) return 11;
+  else if (effect.equals("3D forest")) return 12;
+  else if (effect.equals("3D ocean")) return 13;
+  else if (effect.equals("Color")) return 14;
+  else if (effect.equals("Snowfall")) return 15;
+  else if (effect.equals("Matrix")) return 16;
+  else if (effect.equals("Fireflies")) return 17;
+  else if (effect.equals("Aquarium")) return 18;
+  else if (effect.equals("Starfall")) return 19;
+  else if (effect.equals("Paintball")) return 20;
+  else if (effect.equals("Spiral")) return 21;
+  else if (effect.equals("Warm Light")) return 22;
+  else if (effect.equals("Pendulum")) return 23;
+  else if (effect.equals("Twinkles")) return 24;
+  else if (effect.equals("Police Strobo")) return 25;
+  else if (effect.equals("Incremental Drift Rose")) return 26;
+  else if (effect.equals("Pride")) return 27;
+  else if (effect.equals("Butterflys")) return 28;
+  else if (effect.equals("Rain")) return 29;
+  else if (effect.equals("Thunderstorm")) return 30;
+  else if (effect.equals("Rubik's Cube")) return 31;
+  else if (effect.equals("Nexus")) return 32;
+  else if (effect.equals("Demo")) return 33;
 
   #else
 
   if (effect.equals("Конфетти")) return 0;
-  if (effect.equals("Огонь")) return 1;
-  if (effect.equals("Радуга верт.")) return 2;
-  if (effect.equals("Радуга гориз.")) return 3;
-  if (effect.equals("Смена цвета")) return 4;
-  if (effect.equals("Безумие 3D")) return 5;
-  if (effect.equals("Облака 3D")) return 6;
-  if (effect.equals("Лава 3D")) return 7;
-  if (effect.equals("Плазма 3D")) return 8;
-  if (effect.equals("Радуга 3D")) return 9;
-  if (effect.equals("Павлин 3D")) return 10;
-  if (effect.equals("Зебра 3D")) return 11;
-  if (effect.equals("Лес 3D")) return 12;
-  if (effect.equals("Океан 3D")) return 13;
-  if (effect.equals("Цвет")) return 14;
-  if (effect.equals("Снегопад")) return 15;
-  if (effect.equals("Матрица")) return 16;
-  if (effect.equals("Светлячки")) return 17;
-  if (effect.equals("Аквариум")) return 18;
-  if (effect.equals("Звездопад")) return 19;
-  if (effect.equals("Пейнтбол")) return 20;
-  if (effect.equals("Спираль")) return 21;
-  if (effect.equals("Теплый свет")) return 22;
-  if (effect.equals("Маятник")) return 23;
-  if (effect.equals("Мерцание")) return 24;
-  if (effect.equals("Полицейская сирена")) return 25;
-  if (effect.equals("Дрейф")) return 26;
-  if (effect.equals("Стая")) return 27;
-  if (effect.equals("Мотыльки в банке")) return 28;
-  if (effect.equals("Дождь")) return 29;
-  if (effect.equals("Гроза")) return 30;
-  if (effect.equals("Кубик Рубика")) return 31;
-  if (effect.equals("Nexus")) return 32;
-  if (effect.equals("Демо")) return 33;
+  else if (effect.equals("Огонь")) return 1;
+  else if (effect.equals("Радуга верт.")) return 2;
+  else if (effect.equals("Радуга гориз.")) return 3;
+  else if (effect.equals("Смена цвета")) return 4;
+  else if (effect.equals("Безумие 3D")) return 5;
+  else if (effect.equals("Облака 3D")) return 6;
+  else if (effect.equals("Лава 3D")) return 7;
+  else if (effect.equals("Плазма 3D")) return 8;
+  else if (effect.equals("Радуга 3D")) return 9;
+  else if (effect.equals("Павлин 3D")) return 10;
+  else if (effect.equals("Зебра 3D")) return 11;
+  else if (effect.equals("Лес 3D")) return 12;
+  else if (effect.equals("Океан 3D")) return 13;
+  else if (effect.equals("Цвет")) return 14;
+  else if (effect.equals("Снегопад")) return 15;
+  else if (effect.equals("Матрица")) return 16;
+  else if (effect.equals("Светлячки")) return 17;
+  else if (effect.equals("Аквариум")) return 18;
+  else if (effect.equals("Звездопад")) return 19;
+  else if (effect.equals("Пейнтбол")) return 20;
+  else if (effect.equals("Спираль")) return 21;
+  else if (effect.equals("Теплый свет")) return 22;
+  else if (effect.equals("Маятник")) return 23;
+  else if (effect.equals("Мерцание")) return 24;
+  else if (effect.equals("Полицейская сирена")) return 25;
+  else if (effect.equals("Дрейф")) return 26;
+  else if (effect.equals("Стая")) return 27;
+  else if (effect.equals("Мотыльки в банке")) return 28;
+  else if (effect.equals("Дождь")) return 29;
+  else if (effect.equals("Гроза")) return 30;
+  else if (effect.equals("Кубик Рубика")) return 31;
+  else if (effect.equals("Nexus")) return 32;
+  else if (effect.equals("Демо")) return 33;
 
   #endif
 
+  return 0;
 }
 
 String Get_EFFName (int eff_idx) {
@@ -184,6 +184,7 @@ String Get_EFFName (int eff_idx) {
 
   #endif
 
+  return "UNKNOWN";
 }
 
 void MQTTUpdateState () {

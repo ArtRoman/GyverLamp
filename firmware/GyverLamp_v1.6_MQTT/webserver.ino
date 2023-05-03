@@ -82,7 +82,7 @@ void responseHtml(String out, String title = "AlexGyver Lamp", int code = 200) {
     html += "</head>";
     html += "<body>";
       html += "<div data-role='page'>";
-        html += "<div data-role='header' class='jqm-header'><h2><a class='ui-link' data-ajax='false' href='/'><img style='width: 100%' src='//i0.wp.com/alexgyver.ru/wp-content/uploads/2018/07/site_mob-1.png'></a></h2></div><!-- /header -->";
+        html += "<div data-role='header' class='jqm-header'><h2><a class='ui-link' data-ajax='false' href='/'><!--img style='width: 100%' src='//i0.wp.com/alexgyver.ru/wp-content/uploads/2018/07/site_mob-1.png'--></a></h2></div><!-- /header -->";
         html += "<div role='main' class='ui-content jqm-content' style='padding-bottom: 100px;'>";
         html += "";
         html += out;
