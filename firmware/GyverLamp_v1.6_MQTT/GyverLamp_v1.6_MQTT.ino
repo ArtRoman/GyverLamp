@@ -1,4 +1,3 @@
-
 /*
   Скетч к проекту "Многофункциональный RGB светильник"
   Страница проекта (схемы, описания): https://alexgyver.ru/GyverLamp/
@@ -59,6 +58,7 @@
 
 // Ссылка для менеджера плат:
 // http://arduino.esp8266.com/stable/package_esp8266com_index.json
+// Ставить версию esp8266 2.7.4
 
 // Для WEMOS выбираем плату LOLIN(WEMOS) D1 R2 & mini
 // Для NodeMCU выбираем NodeMCU 1.0 (ESP-12E Module)
@@ -67,7 +67,7 @@
 
 // ============= НАСТРОЙКИ =============
 // -------- ВРЕМЯ -------
-#define GMT 2              // смещение (москва 3)
+#define GMT 1              // смещение (москва 3)
 #define NTP_ADDRESS  "europe.pool.ntp.org"    // сервер времени
 
 // -------- РАССВЕТ -------
@@ -138,6 +138,9 @@ byte IP_AP[] = {192, 168, 4, 100};   // статический IP точки д�
 #include <Timer.h>
 #include "fonts.h"
 #include <uptime_formatter.h>
+
+#include <LiquidCrystal.h>
+#include "DHT.h"
 
 // ------------------- ТИПЫ --------------------
 
@@ -243,6 +246,62 @@ Timer *demoTimer = new Timer(60000); //  время переключения э�
 const TProgmemRGBPalette16 *palette_arr[] = {&PartyColors_p, &OceanColors_p, &LavaColors_p, &HeatColors_p, &CloudColors_p, &ForestColors_p, &RainbowColors_p};
 const TProgmemRGBPalette16 *curPalette = palette_arr[0];
 
+
+//----------------------
+
+#define DHTPIN D3
+#define DHTTYPE DHT11
+
+const int rs = D8, en = D7, d4 = D6, d5 = D5, d6 = D1, d7 = D0;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+DHT dht(DHTPIN, DHTTYPE);
+
+const int numRows = 2;
+const int numCols = 16;
+
+byte spinner0[8] = {
+  0b00000,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00100,
+  0b00000
+};
+byte spinner1[8] = {
+  0b00000,
+  0b00000,
+  0b00001,
+  0b00010,
+  0b00100,
+  0b01000,
+  0b10000,
+  0b00000
+};
+byte spinner2[8] = {
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b11111,
+  0b00000,
+  0b00000,
+  0b00000
+};
+byte spinner3[8] = {
+  0b00000,
+  0b00000,
+  0b10000,
+  0b01000,
+  0b00100,
+  0b00010,
+  0b00001,
+  0b00000
+};
+//----------------------
+
 void setup() {
 
   // ЛЕНТА
@@ -254,10 +313,17 @@ void setup() {
   touch.setStepTimeout(100);
   touch.setClickTimeout(500);
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println();
   delay(1000);
   
+  lcd.begin(numCols, numRows);
+  lcd.createChar(0, spinner0);
+  lcd.createChar(1, spinner1);
+  lcd.createChar(2, spinner2);
+  lcd.createChar(3, spinner3);
+  dht.begin();
+
   EEPROM.begin(512);
 
   // читаем количество запусков
@@ -511,6 +577,9 @@ void loop() {
   if (USE_MQTT && !mqttclient.connected()) MQTTreconnect();
   if (USE_MQTT) mqttclient.loop();
 
+  lcdLoop();
+  dhtLoop();
+
   ArduinoOTA.handle();
   yield();
 }
@@ -522,6 +591,83 @@ void eeWriteInt(int pos, int val) {
   EEPROM.write(pos + 2, *(p + 2));
   EEPROM.write(pos + 3, *(p + 3));
   EEPROM.commit();
+}
+
+int dhtLastUpdate = 0;
+
+void dhtLoop(){
+  int timeSec = millis()/1000;
+
+  if (dhtLastUpdate == timeSec) return;
+  dhtLastUpdate = timeSec;
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  // Read temperature as Fahrenheit (isFahrenheit = true)
+  //float f = dht.readTemperature(true);
+
+  //Serial.print("readTemperature: ");
+  //Serial.println(t);
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t) /*|| isnan(f)*/) {
+    //Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+
+  float hic = dht.computeHeatIndex(t, h, false);
+  
+  int tInt = t;
+  int hInt = h;
+  int hicInt = hic;
+
+  lcd.setCursor(0, 1);
+  lcd.print(t); //Temperature
+  lcd.print("C,");
+  //lcd.print("hu:");
+  lcd.print(hInt); //Humidity
+  lcd.print("% ");
+  //lcd.print("hi:");
+  //lcd.print(hicInt); //Heat index
+  //lcd.print("C ");
+}
+
+int lcdLastUpdate = 0;
+
+void lcdLoop() {
+  int timeSec = millis()/250;
+
+  if (lcdLastUpdate == timeSec) return;
+  lcdLastUpdate = timeSec;
+
+  //lcd.clear();
+  lcd.setCursor(0, 0);
+  //lcd.print(WiFi.localIP());
+
+  lcd.print(Get_EFFName(currentMode));
+  lcd.print("        ");
+  
+  lcd.setCursor(12, 0);
+  if (ONflag){
+    lcd.print("On");
+  } else {
+    lcd.print("Off");
+  }
+
+  lcd.setCursor(15, 0);
+  int asdf = timeSec % 4;
+  lcd.write(asdf);
+
+  lcd.setCursor(11, 1);
+  lcd.print(millis()/1000);
+
+  /*lcd.setCursor(10, 1);
+  lcd.print(" ");
+  lcd.print(timeStr);
+  lcd.print(" ");*/
 }
 
 int eeGetInt(int pos) {
